@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox alignment="CENTER" spacing="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.example.democonsultorio.controller.MainController">
 
-</AnchorPane>
+    <TableView fx:id="tabla" prefHeight="250">
+        <columns>
+            <TableColumn fx:id="colCurp" text="CURP" />
+            <TableColumn fx:id="colNombre" text="Nombre" />
+            <TableColumn fx:id="colEdad" text="Edad" />
+            <TableColumn fx:id="colTelefono" text="Telefono" />
+            <TableColumn fx:id="colEstatus" text="Estatus" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button onAction="#abrirFormulario" text="Nuevo" />
+        <Button onAction="#inactivar" text="Inactivar" />
+    </HBox>
+
+    <HBox spacing="10">
+        <Label fx:id="lblTotal" />
+        <Label fx:id="lblActivos" />
+        <Label fx:id="lblInactivos" />
+    </HBox>
+
+</VBox>
