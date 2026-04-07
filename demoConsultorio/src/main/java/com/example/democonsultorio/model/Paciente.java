@@ -71,4 +71,3 @@ public class Paciente {
                 '}';
     }
 }
->>>>>>> yolotzin-12/yolotzin-silva

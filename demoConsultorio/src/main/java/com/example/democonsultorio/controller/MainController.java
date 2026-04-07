@@ -1,18 +1,14 @@
 package com.example.democonsultorio.controller;
 
-public class MainController {
-}
-
-package com.example.democonsultorio;
-
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.util.List;
+import com.example.democonsultorio.service.PacienteService;
+import com.example.democonsultorio.model.Paciente;
 
 public class MainController {
 
@@ -29,7 +25,6 @@ public class MainController {
 
     @FXML
     public void initialize() {
-
         service.cargarArchivo();
 
         colCurp.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getCurp()));
@@ -39,7 +34,6 @@ public class MainController {
         colEstatus.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getEstatus()));
 
         tabla.setItems(FXCollections.observableArrayList(service.getLista()));
-
         actualizarResumen();
     }
 
@@ -82,4 +76,3 @@ public class MainController {
         lblInactivos.setText("Inactivos: " + inactivos);
     }
 }
->>>>>>> yolotzin-12/yolotzin-silva

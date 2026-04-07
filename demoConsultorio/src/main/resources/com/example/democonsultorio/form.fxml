@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox spacing="10" alignment="CENTER"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.democonsultorio.controller.FormController">
 
-</AnchorPane>
+    <TextField fx:id="txtCurp" promptText="CURP"/>
+    <TextField fx:id="txtNombre" promptText="Nombre"/>
+    <TextField fx:id="txtEdad" promptText="Edad"/>
+    <TextField fx:id="txtTelefono" promptText="Teléfono"/>
+    <TextField fx:id="txtAlergias" promptText="Alergias"/>
+
+    <Button text="Guardar" onAction="#guardar"/>
+
+</VBox>
