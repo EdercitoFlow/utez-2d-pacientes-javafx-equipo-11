@@ -38,7 +38,7 @@ public class MainController {
     @FXML
     private void abrirFormulario() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/democonsultorio/form.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/democonsultorio/nuevo-paciente.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
             stage.setTitle("Nuevo Paciente");
@@ -47,6 +47,29 @@ public class MainController {
             actualizarTabla();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void consultar() {
+        Paciente seleccionado = tabla.getSelectionModel().getSelectedItem();
+        if (seleccionado != null) {
+            mostrarAlerta("Consulta de Paciente",
+                    "Nombre: " + seleccionado.getNombre() + "\n" +
+                            "CURP: " + seleccionado.getCurp() + "\n" +
+                            "Estatus: " + seleccionado.getEstatus());
+        } else {
+            mostrarAlerta("Atención", "Selecciona un paciente para consultar.");
+        }
+    }
+
+    @FXML
+    private void actualizar() {
+        Paciente seleccionado = tabla.getSelectionModel().getSelectedItem();
+        if (seleccionado != null) {
+            System.out.println("Editando a: " + seleccionado.getNombre());
+        } else {
+            mostrarAlerta("Atención", "Selecciona un paciente para actualizar.");
         }
     }
 
@@ -65,5 +88,13 @@ public class MainController {
         lblTotal.setText("Total: " + total);
         lblActivos.setText("Activos: " + activos);
         lblInactivos.setText("Inactivos: " + inactivos);
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }
