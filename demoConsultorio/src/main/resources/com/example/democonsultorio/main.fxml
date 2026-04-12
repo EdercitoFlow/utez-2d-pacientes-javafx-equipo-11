@@ -17,7 +17,9 @@
 
     <HBox spacing="10">
         <Button onAction="#abrirFormulario" text="Nuevo" />
-        <Button onAction="#inactivar" text="Inactivar" />
+        <Button onAction="#inactivar" text="Eliminar" />
+        <Button onAction="#inactivar" text="Consultar" />
+        <Button onAction="#inactivar" text="Actualizar" />
     </HBox>
 
     <HBox spacing="10">

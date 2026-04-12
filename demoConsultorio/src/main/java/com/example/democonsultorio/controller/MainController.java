@@ -50,15 +50,6 @@ public class MainController {
         }
     }
 
-    @FXML
-    private void inactivar() {
-        int index = tabla.getSelectionModel().getSelectedIndex();
-        if (index >= 0) {
-            service.inactivar(index);
-            actualizarTabla();
-        }
-    }
-
     private void actualizarTabla() {
         service.cargarArchivo();
         tabla.setItems(FXCollections.observableArrayList(service.getLista()));

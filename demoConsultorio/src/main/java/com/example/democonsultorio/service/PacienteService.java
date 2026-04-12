@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PacienteService {
     private List<Paciente> pacientes = new ArrayList<>();
-    private final String ARCHIVO = "pacientes.txt";
+    private final String ARCHIVO = "pacientes.csv";
 
     public void cargarArchivo() {
         pacientes.clear();
