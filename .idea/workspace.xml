@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8a560bc-7f85-4822-85f7-2beab565365b" name="Changes" comment="" />
+    <list default="true" id="b8a560bc-7f85-4822-85f7-2beab565365b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demoConsultorio/src/main/java/com/example/democonsultorio/controller/FormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demoConsultorio/src/main/java/com/example/democonsultorio/controller/FormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demoConsultorio/src/main/resources/com/example/democonsultorio/form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/demoConsultorio/src/main/resources/com/example/democonsultorio/form.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +44,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "Merging dev",
+    "git-widget-placeholder": "yolotzin-12/yolotzin-silva",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/yolo_/OneDrive/Desktop/integradora papois/utez-2d-pacientes-javafx-equipo-11",
     "node.js.detected.package.eslint": "true",

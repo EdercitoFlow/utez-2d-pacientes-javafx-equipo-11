@@ -5,13 +5,44 @@ import com.example.democonsultorio.service.PacienteService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class FormController {
 
     @FXML private TextField txtCurp, txtNombre, txtEdad, txtTelefono, txtAlergias;
+    @FXML private Button btnGuardar;
 
     private static PacienteService service = new PacienteService();
+
+    @FXML
+    public void initialize() {
+
+        btnGuardar.setStyle(
+                "-fx-background-color: #4CAF50;" +
+                        "-fx-text-fill: white;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-font-size: 13px;"
+        );
+
+        btnGuardar.setOnMouseEntered(e ->
+                btnGuardar.setStyle(
+                        "-fx-background-color: #45a049;" +
+                                "-fx-text-fill: white;" +
+                                "-fx-background-radius: 8;" +
+                                "-fx-font-size: 13px;"
+                )
+        );
+
+        btnGuardar.setOnMouseExited(e ->
+                btnGuardar.setStyle(
+                        "-fx-background-color: #4CAF50;" +
+                                "-fx-text-fill: white;" +
+                                "-fx-background-radius: 8;" +
+                                "-fx-font-size: 13px;"
+                )
+        );
+    }
 
     @FXML
     private void guardar() {

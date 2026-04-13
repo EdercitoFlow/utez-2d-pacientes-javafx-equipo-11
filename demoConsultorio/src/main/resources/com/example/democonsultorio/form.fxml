@@ -13,6 +13,6 @@
     <TextField fx:id="txtTelefono" promptText="Teléfono"/>
     <TextField fx:id="txtAlergias" promptText="Alergias"/>
 
-    <Button text="Guardar" onAction="#guardar"/>
+    <Button fx:id="btnGuardar" text="Guardar" onAction="#guardar"/>
 
 </VBox>
