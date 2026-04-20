@@ -29,9 +29,8 @@ public class FormController {
         txtNombre.setText(p.getNombre());
         txtEdad.setText(String.valueOf(p.getEdad()));
         txtTelefono.setText(p.getTelefono());
-        // txtAlergias.setText(p.getAlergias()); // Agregado por si tienes el campo en el modelo
 
-        txtCurp.setEditable(false); // No se permite editar la CURP
+        txtCurp.setEditable(false);
     }
 
     @FXML
