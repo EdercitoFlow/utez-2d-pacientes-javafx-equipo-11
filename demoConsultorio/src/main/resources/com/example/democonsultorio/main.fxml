@@ -14,6 +14,7 @@
             <TableColumn fx:id="colCurp" text="CURP" />
             <TableColumn fx:id="colNombre" text="Nombre" />
             <TableColumn fx:id="colEdad" text="Edad" />
+            <TableColumn fx:id="colAlergias" text="Alergias" />
             <TableColumn fx:id="colTelefono" text="Telefono" />
             <TableColumn fx:id="colEstatus" text="Estatus" />
         </columns>
@@ -26,6 +27,7 @@
         <Button onAction="#abrirFormulario" text="Nuevo Paciente" style="-fx-padding: 8 15;" />
         <Button onAction="#consultar" text="Consultar" style="-fx-padding: 8 15;" />
         <Button onAction="#cambiarEstatus" text="Cambiar Estatus" style="-fx-padding: 8 15;" />
+        <Button fx:id="btnEditar" onAction="#editar" text="Actualizar" style="-fx-padding: 8 15;" />
         <Button fx:id="btnEliminar" onAction="#eliminar" text="Eliminar" style="-fx-padding: 8 15; -fx-background-color: #ffcccc; -fx-text-fill: #990000;" />
     </HBox>
 

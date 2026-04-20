@@ -14,34 +14,24 @@ public class FormController {
     @FXML private Button btnGuardar;
 
     private static PacienteService service = new PacienteService();
+    private Paciente pacienteEnEdicion; // Variable para saber si estamos editando
 
     @FXML
     public void initialize() {
+        btnGuardar.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 13px;");
+        btnGuardar.setOnMouseEntered(e -> btnGuardar.setStyle("-fx-background-color: #45a049; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 13px;"));
+        btnGuardar.setOnMouseExited(e -> btnGuardar.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 13px;"));
+    }
 
-        btnGuardar.setStyle(
-                "-fx-background-color: #4CAF50;" +
-                        "-fx-text-fill: white;" +
-                        "-fx-background-radius: 8;" +
-                        "-fx-font-size: 13px;"
-        );
+    public void prepararEdicion(Paciente p) {
+        this.pacienteEnEdicion = p;
+        txtCurp.setText(p.getCurp());
+        txtNombre.setText(p.getNombre());
+        txtEdad.setText(String.valueOf(p.getEdad()));
+        txtTelefono.setText(p.getTelefono());
+        // txtAlergias.setText(p.getAlergias()); // Agregado por si tienes el campo en el modelo
 
-        btnGuardar.setOnMouseEntered(e ->
-                btnGuardar.setStyle(
-                        "-fx-background-color: #45a049;" +
-                                "-fx-text-fill: white;" +
-                                "-fx-background-radius: 8;" +
-                                "-fx-font-size: 13px;"
-                )
-        );
-
-        btnGuardar.setOnMouseExited(e ->
-                btnGuardar.setStyle(
-                        "-fx-background-color: #4CAF50;" +
-                                "-fx-text-fill: white;" +
-                                "-fx-background-radius: 8;" +
-                                "-fx-font-size: 13px;"
-                )
-        );
+        txtCurp.setEditable(false); // No se permite editar la CURP
     }
 
     @FXML
@@ -53,30 +43,43 @@ public class FormController {
             String telefono = txtTelefono.getText();
             String alergias = txtAlergias.getText();
 
+            // Validaciones
             if (curp.isEmpty()) throw new Exception("CURP obligatorio");
             if (edad < 0 || edad > 120) throw new Exception("Edad inválida");
             if (!telefono.matches("\\d{10}")) throw new Exception("Teléfono inválido");
 
-            Paciente p = new Paciente(curp, nombre, edad, telefono, alergias, "ACTIVO");
-
             service.cargarArchivo();
-            service.agregar(p);
+
+            if (pacienteEnEdicion != null) {
+                pacienteEnEdicion.setNombre(nombre);
+                pacienteEnEdicion.setEdad(edad);
+                pacienteEnEdicion.setTelefono(telefono);
+                pacienteEnEdicion.setAlergias(alergias);
+            } else {
+                Paciente nuevo = new Paciente(curp, nombre, edad, telefono, alergias, "ACTIVO");
+                service.agregar(nuevo);
+            }
+
+            service.guardarEnArchivo();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
-            alert.setContentText("Guardado correctamente");
+            alert.setContentText(pacienteEnEdicion != null ? "Actualizado correctamente" : "Guardado correctamente");
             alert.showAndWait();
 
             ((Stage) txtCurp.getScene().getWindow()).close();
 
         } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("La edad debe ser un número");
-            alert.show();
+            mostrarError("La edad debe ser un número");
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.show();
+            mostrarError(e.getMessage());
         }
+    }
+
+    private void mostrarError(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.show();
     }
 }

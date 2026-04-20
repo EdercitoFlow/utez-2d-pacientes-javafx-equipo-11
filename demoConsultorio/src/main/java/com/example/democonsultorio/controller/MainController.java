@@ -18,10 +18,12 @@ public class MainController {
     @FXML private TableColumn<Paciente, String> colNombre;
     @FXML private TableColumn<Paciente, Integer> colEdad;
     @FXML private TableColumn<Paciente, String> colTelefono;
+    @FXML private TableColumn<Paciente, String> colAlergias;
     @FXML private TableColumn<Paciente, String> colEstatus;
 
     @FXML private Label lblTotal, lblActivos, lblInactivos;
     @FXML private Button btnEliminar;
+    @FXML private Button btnEditar;
 
     private static PacienteService service = new PacienteService();
 
@@ -32,10 +34,14 @@ public class MainController {
         colNombre.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("nombre"));
         colEdad.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("edad"));
         colTelefono.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("telefono"));
+
         colEstatus.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("estatus"));
 
         btnEliminar.disableProperty().bind(tabla.getSelectionModel().selectedItemProperty().isNull());
+        btnEditar.disableProperty().bind(tabla.getSelectionModel().selectedItemProperty().isNull());
+
         actualizarTabla();
+        colAlergias.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("alergias"));
     }
 
     @FXML
@@ -43,14 +49,38 @@ public class MainController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/democonsultorio/form.fxml"));
             Stage stage = new Stage();
-            // Tamaño ajustado para que luzca mejor desde el inicio
             stage.setScene(new Scene(loader.load(), 400, 450));
             stage.setTitle("Registro de Nuevo Paciente");
-            stage.setResizable(false); // Evita que se deforme el diseño
+            stage.setResizable(false);
             stage.showAndWait();
             actualizarTabla();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void editar() {
+        Paciente seleccionado = tabla.getSelectionModel().getSelectedItem();
+        if (seleccionado != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/democonsultorio/form.fxml"));
+                Stage stage = new Stage();
+                stage.setScene(new Scene(loader.load(), 400, 450));
+
+                // Obtener controlador y pasar datos
+                FormController controller = loader.getController();
+                controller.prepararEdicion(seleccionado);
+
+                stage.setTitle("Editar Paciente");
+                stage.setResizable(false);
+                stage.showAndWait();
+
+                service.guardarEnArchivo();
+                actualizarTabla();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -64,7 +94,9 @@ public class MainController {
                 seleccionado.setEstatus("ACTIVO");
             }
             service.guardarEnArchivo();
-            actualizarTabla();
+
+            tabla.refresh();
+            actualizarResumen();
         }
     }
 
