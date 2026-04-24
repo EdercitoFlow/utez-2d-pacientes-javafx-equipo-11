@@ -28,7 +28,7 @@ public class MainController {
     private static PacienteService service = new PacienteService();
 
     @FXML
-    public void initialize() {
+    public void initialize() { //Carga datos iniciales
         service.cargarArchivo();
         colCurp.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("curp"));
         colNombre.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("nombre"));
@@ -40,13 +40,13 @@ public class MainController {
         btnEliminar.disableProperty().bind(tabla.getSelectionModel().selectedItemProperty().isNull());
         btnEditar.disableProperty().bind(tabla.getSelectionModel().selectedItemProperty().isNull());
 
-        actualizarTabla();
+        actualizarTabla(); //Aparezcan los pacientes visualmente
         colAlergias.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("alergias"));
     }
 
     @FXML
     private void abrirFormulario() {
-        try {
+        try { //Medida de seguridad
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/democonsultorio/form.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load(), 400, 450));
@@ -61,22 +61,21 @@ public class MainController {
 
     @FXML
     private void editar() {
-        Paciente seleccionado = tabla.getSelectionModel().getSelectedItem();
-        if (seleccionado != null) {
+        Paciente seleccionado = tabla.getSelectionModel().getSelectedItem(); //Se guarda el paciente seleccionado
+        if (seleccionado != null) { //Validación
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/democonsultorio/form.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(loader.load(), 400, 450));
 
-                // Obtener controlador y pasar datos
-                FormController controller = loader.getController();
-                controller.prepararEdicion(seleccionado);
+                FormController controller = loader.getController(); //Ahora Main tiene el control de FormController
+                controller.prepararEdicion(seleccionado);   //Pasa paciente de la tabla al otro controlador y se vuelve !=null
 
                 stage.setTitle("Editar Paciente");
                 stage.setResizable(false);
                 stage.showAndWait();
 
-                service.guardarEnArchivo();
+                service.guardarEnArchivo(); //Asegurar cambios en DD
                 actualizarTabla();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -86,32 +85,32 @@ public class MainController {
 
     @FXML
     private void cambiarEstatus() {
-        Paciente seleccionado = tabla.getSelectionModel().getSelectedItem();
+        Paciente seleccionado = tabla.getSelectionModel().getSelectedItem(); //Revisa que linea esta seleccionada
         if (seleccionado != null) {
-            if (seleccionado.getEstatus().equalsIgnoreCase("ACTIVO")) {
+            if (seleccionado.getEstatus().equalsIgnoreCase("ACTIVO")) { //equals ignora las mayusculas o minusculas
                 seleccionado.setEstatus("INACTIVO");
             } else {
                 seleccionado.setEstatus("ACTIVO");
             }
-            service.guardarEnArchivo();
+            service.guardarEnArchivo(); //Manda cambios al DD
 
-            tabla.refresh();
-            actualizarResumen();
+            tabla.refresh(); //Mas rapido que actualizartabla porque solo cambiamos un dato y no más
+            actualizarResumen(); //Vuelve a contar los estatus
         }
     }
 
     @FXML
     private void eliminar() {
-        Paciente seleccionado = tabla.getSelectionModel().getSelectedItem();
+        Paciente seleccionado = tabla.getSelectionModel().getSelectedItem(); //Verifica linea seleccionada
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Eliminar");
         confirm.setHeaderText(null);
         confirm.setContentText("¿Desea borrar permanentemente a: " + seleccionado.getNombre() + "?");
         Optional<ButtonType> res = confirm.showAndWait();
-        if (res.isPresent() && res.get() == ButtonType.OK) {
-            service.getLista().remove(seleccionado);
-            service.guardarEnArchivo();
-            actualizarTabla();
+        if (res.isPresent() && res.get() == ButtonType.OK) { //Solo si se selecciono Aceptar
+            service.getLista().remove(seleccionado); //Borrado local
+            service.guardarEnArchivo(); //Reescribe el archivo
+            actualizarTabla(); //Muestra nuevamente visualmente
         }
     }
 
@@ -121,10 +120,10 @@ public class MainController {
         buscar.setTitle("Consultar");
         buscar.setHeaderText("Búsqueda de Paciente");
         buscar.setContentText("Ingrese el nombre:");
-        buscar.showAndWait().ifPresent(nombre -> {
-            for (Paciente p : tabla.getItems()) {
-                if (p.getNombre().equalsIgnoreCase(nombre.trim())) {
-                    tabla.getSelectionModel().select(p);
+        buscar.showAndWait().ifPresent(nombre -> { //Se ejecuta si se escribio algo y "Aceptar"
+            for (Paciente p : tabla.getItems()) { //Revisa lo que hay en la tabla
+                if (p.getNombre().equalsIgnoreCase(nombre.trim())) {    //Ignora mayus y elimina espacios mal usados
+                    tabla.getSelectionModel().select(p); //Señala la persona seleccionada
                     tabla.scrollTo(p);
                     return;
                 }
@@ -133,18 +132,18 @@ public class MainController {
     }
 
     private void actualizarTabla() {
-        service.cargarArchivo();
-        tabla.setItems(FXCollections.observableArrayList(service.getLista()));
+        service.cargarArchivo(); //Trae la nueva info
+        tabla.setItems(FXCollections.observableArrayList(service.getLista())); //Refresh tabla
         actualizarResumen();
     }
 
     private void actualizarResumen() {
-        List<Paciente> lista = service.getLista();
+        List<Paciente> lista = service.getLista(); //Trae lista
         int total = lista.size();
         int activos = 0;
-        for (Paciente p : lista) {
+        for (Paciente p : lista) { //Revisa uno por uno
             if (p.getEstatus().equalsIgnoreCase("ACTIVO")) activos++;
-        }
+        }//Sumatoria
         lblTotal.setText("Total: " + total);
         lblActivos.setText("Activos: " + activos);
         lblInactivos.setText("Inactivos: " + (total - activos));
