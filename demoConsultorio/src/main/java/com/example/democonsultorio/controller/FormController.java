@@ -51,7 +51,7 @@ public class FormController {
             if (!telefono.matches("\\d{10}")) throw new Exception("Teléfono inválido");
 
             service.cargarArchivo();
-            //Editable, se usan: setter objeto cambiar valores internos
+            //Editable
             if (pacienteEnEdicion != null) {
                 pacienteEnEdicion.setNombre(nombre);
                 pacienteEnEdicion.setEdad(edad);
